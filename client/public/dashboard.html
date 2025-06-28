@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard de Gestión de Asistencia</title>
+    <!-- Tailwind CSS CDN for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./CSS/style.css">
+</head>
+
+<body class="bg-gray-100 font-inter">
+    <div class="dashboard-container">
+        <!-- Navigation Tabs -->
+        <div class="flex border-b border-gray-200 bg-gray-50 rounded-t-xl">
+            <div id="tab-alumnos" class="nav-tab active">Alumnos</div>
+            <div id="tab-clases" class="nav-tab">Clases</div>
+            <div id="tab-asistencia" class="nav-tab">Asistencia</div>
+        </div>
+
+        <!-- Alumnos Section -->
+        <div id="section-alumnos" class="section-content active">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Gestión de Alumnos</h2>
+
+            <!-- Add/Edit Alumno Form -->
+            <form id="alumno-form" class="bg-gray-50 p-6 rounded-lg shadow-sm mb-8">
+                <input type="hidden" id="alumno-id">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div class="form-group">
+                        <label for="alumno-nombre">Nombre</label>
+                        <input type="text" id="alumno-nombre" placeholder="Nombre del alumno" required
+                            class="focus:border-blue-500">
+                    </div>
+                    <div class="form-group">
+                        <label for="alumno-apellido">Apellido</label>
+                        <input type="text" id="alumno-apellido" placeholder="Apellido del alumno" required
+                            class="focus:border-blue-500">
+                    </div>
+                    <div class="form-group">
+                        <label for="alumno-cedula">Cédula</label>
+                        <input type="text" id="alumno-cedula" placeholder="Cédula del alumno" required
+                            class="focus:border-blue-500">
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary w-full md:w-auto">Guardar Alumno</button>
+            </form>
+
+            <!-- Alumnos Table -->
+            <div class="table-container">
+                <table class="bg-white rounded-lg overflow-hidden">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Nombre</th>
+                            <th>Apellido</th>
+                            <th>Cédula</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="alumnos-table-body">
+                        <!-- Alumnos will be populated here by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Clases Section -->
+        <div id="section-clases" class="section-content">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Gestión de Clases</h2>
+
+            <!-- Add/Edit Clase Form -->
+            <form id="clase-form" class="bg-gray-50 p-6 rounded-lg shadow-sm mb-8">
+                <input type="hidden" id="clase-id">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div class="form-group">
+                        <label for="clase-id-curso">ID Curso</label>
+                        <input type="number" id="clase-id-curso" placeholder="Ej: 101" required
+                            class="focus:border-blue-500">
+                    </div>
+                    <div class="form-group">
+                        <label for="clase-fecha">Fecha</label>
+                        <input type="date" id="clase-fecha" required class="focus:border-blue-500">
+                    </div>
+                    <div class="form-group">
+                        <label for="clase-descripcion">Descripción</label>
+                        <input type="text" id="clase-descripcion" placeholder="Descripción de la clase" required
+                            class="focus:border-blue-500">
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary w-full md:w-auto">Guardar Clase</button>
+            </form>
+
+            <!-- Clases Table -->
+            <div class="table-container">
+                <table class="bg-white rounded-lg overflow-hidden">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>ID Curso</th>
+                            <th>Fecha</th>
+                            <th>Descripción</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="clases-table-body">
+                        <!-- Clases will be populated here by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Asistencia Section -->
+        <div id="section-asistencia" class="section-content">
+            <h2 class="text-3xl font-bold text-gray-800 mb-6">Gestión de Asistencia</h2>
+
+            <!-- Add/Edit Asistencia Form -->
+            <form id="asistencia-form" class="bg-gray-50 p-6 rounded-lg shadow-sm mb-8">
+                <input type="hidden" id="asistencia-id">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+                    <div class="form-group">
+                        <label for="asistencia-id-alumno">Alumno</label>
+                        <select id="asistencia-id-alumno" required class="focus:border-blue-500">
+                            <!-- Alumnos options will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="asistencia-id-clase">Clase</label>
+                        <select id="asistencia-id-clase" required class="focus:border-blue-500">
+                            <!-- Clases options will be populated by JavaScript -->
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="asistencia-estado">Estado</label>
+                        <select id="asistencia-estado" required class="focus:border-blue-500">
+                            <option value="presente">Presente</option>
+                            <option value="ausente">Ausente</option>
+                            <option value="justificado">Justificado</option>
+                        </select>
+                    </div>
+                    <div class="form-group md:col-span-3">
+                        <label for="asistencia-observaciones">Observaciones</label>
+                        <textarea id="asistencia-observaciones" rows="3" placeholder="Observaciones sobre la asistencia"
+                            class="focus:border-blue-500"></textarea>
+                    </div>
+                </div>
+                <button type="submit" class="btn-primary w-full md:w-auto">Guardar Asistencia</button>
+            </form>
+
+            <!-- Asistencia Table -->
+            <div class="table-container">
+                <table class="bg-white rounded-lg overflow-hidden">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Alumno</th>
+                            <th>Clase</th>
+                            <th>Estado</th>
+                            <th>Observaciones</th>
+                            <th>Fecha Registro</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="asistencia-table-body">
+                        <!-- Asistencia will be populated here by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Message Modal -->
+    <div id="message-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('message-modal')">&times;</span>
+            <p id="message-modal-text" class="text-lg text-gray-700"></p>
+            <div class="mt-6 flex justify-end">
+                <button class="btn-primary" onclick="closeModal('message-modal')">Aceptar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirm-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" onclick="closeModal('confirm-modal')">&times;</span>
+            <p id="confirm-modal-text" class="text-lg text-gray-700 mb-6"></p>
+            <div class="mt-6 flex justify-end gap-3">
+                <button
+                    class="px-5 py-2 rounded-lg bg-gray-300 text-gray-800 font-semibold hover:bg-gray-400 transition-colors"
+                    onclick="confirmModalCallback(false)">Cancelar</button>
+                <button class="btn-delete">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="./JS/dash.js"></script>
+</body>
+
+</html>
