@@ -1,6 +1,6 @@
 // src/models/Asistencia.js
 import { DataTypes } from 'sequelize';
-import sequelize from '../db.js';
+import {sequelize} from '../db.js';
 
 const Asistencia = sequelize.define('Asistencia', {
   id_asistencia: {

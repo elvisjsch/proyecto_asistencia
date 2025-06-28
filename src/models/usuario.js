@@ -1,6 +1,6 @@
 // src/models/Usuario.js
 import { DataTypes } from 'sequelize';
-import sequelize from '../db.js';
+import {sequelize} from '../db.js';
 
 const Usuario = sequelize.define('Usuario', {
   id_usurios: {

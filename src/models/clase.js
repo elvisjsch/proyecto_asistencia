@@ -1,6 +1,6 @@
 // src/models/Clase.js
 import { DataTypes } from 'sequelize';
-import sequelize from '../db.js';
+import {sequelize} from '../db.js';
 
 const Clase = sequelize.define('Clase', {
   id_clase: {
@@ -10,7 +10,7 @@ const Clase = sequelize.define('Clase', {
     field: 'id_clase'
   },
   num_curso: {
-    type: DataTypes.INTEGER,
+    type: DataTypes.TEXT(20),
     allowNull: false
   },
   fecha: {
