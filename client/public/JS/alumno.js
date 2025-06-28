@@ -7,11 +7,16 @@ function showMessage(message) {
     const text = document.getElementById('message-modal-text');
     text.textContent = message;
     modal.style.display = 'flex';
+
+    // Cerrar automáticamente después de 3 segundos
+    setTimeout(() => {
+        modal.style.display = 'none';
+    }, 3000);
 }
 
-let confirmModalCallback = null;
+window.confirmModalCallback = null;
 
-window.showConfirm = function showConfirm(message, callback) {
+window.showConfirm = function (message, callback) {
     const modal = document.getElementById('confirm-modal');
     const text = document.getElementById('confirm-modal-text');
     text.textContent = message;
@@ -20,9 +25,9 @@ window.showConfirm = function showConfirm(message, callback) {
         modal.style.display = 'none';
     };
     modal.style.display = 'flex';
-}
+};
 
-window.closeModal = function(id) {
+window.closeModal = function (id) {
     const modal = document.getElementById(id);
     if (modal) {
         modal.style.display = 'none';
@@ -150,7 +155,7 @@ window.deleteAlumnoConfirm = (id) => {
             try {
                 await deleteAlumno(id);
                 showMessage('🗑️ Alumno eliminado correctamente');
-                renderAlumnos();
+                renderAlumnos(); // Recargar tabla
             } catch (error) {
                 showMessage('❌ Error al eliminar el alumno');
                 console.error(error);
@@ -162,7 +167,7 @@ window.deleteAlumnoConfirm = (id) => {
 // Inicialización automática
 document.addEventListener('DOMContentLoaded', () => {
     const alumnosSection = document.getElementById('section-alumnos');
-    if (alumnosSection.classList.contains('active')) {
+    if (alumnosSection && alumnosSection.classList.contains('active')) {
         renderAlumnos();
     }
 });
