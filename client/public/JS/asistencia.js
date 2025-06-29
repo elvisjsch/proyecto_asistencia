@@ -57,16 +57,6 @@ async function createAsistencia(asistencia) {
     return await res.json();
 }
 
-async function updateAsistencia(id, asistencia) {
-    const res = await fetch(`http://localhost:4000/api/asistencia/${id}`, {
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(asistencia),
-    });
-    if (!res.ok) throw new Error('Error al actualizar la asistencia');
-    return await res.json();
-}
-
 async function deleteAsistencia(id) {
     const res = await fetch(`http://localhost:4000/api/asistencia/${id}`, {
         method: 'DELETE',
@@ -75,19 +65,39 @@ async function deleteAsistencia(id) {
     return await res.json();
 }
 
+let allAlumnos = [];
+let allClases = [];
+
+// --- Cargar alumnos y clases al inicio ---
+async function cargarDatosGlobales() {
+    try {
+        const alumnosRes = await fetch('http://localhost:4000/api/alumno/');
+        const clasesRes = await fetch('http://localhost:4000/api/clase/');
+
+        allAlumnos = await alumnosRes.json();
+        allClases = await clasesRes.json();
+    } catch (error) {
+        showMessage('❌ Error al cargar datos globales');
+        console.error(error);
+    }
+}
+
 // --- Render Functions (Asistencia) ---
 export async function renderAsistencia() {
     const asistencias = await fetchAsistencia();
     const tbody = document.getElementById('asistencia-table-body');
     tbody.innerHTML = '';
-    console.log(asistencias)
+
     asistencias.forEach(asis => {
+        const alumno = allAlumnos.find(a => a.id_alumno === asis.id_alumno);
+        const clase = allClases.find(c => c.id_clase === asis.id_clase);
+
         const tr = document.createElement('tr');
 
         tr.innerHTML = `
             <td>${asis.id_asistencia}</td>
-            <td>${asis.alumno ? `${asis.alumno.nombre} ${asis.alumno.apellido}` : 'Sin alumno'}</td>
-            <td>${asis.clase ? asis.clase.descripcion : 'Sin clase'}</td>
+            <td>${alumno ? `${alumno.nombre} ${alumno.apellido}` : 'Sin alumno'}</td>
+            <td>${clase ? `${clase.descripcion} (${clase.fecha.split('T')[0]})` : 'Sin clase'}</td>
             <td>${asis.estado}</td>
             <td>${asis.observaciones || '-'}</td>
             <td>${new Date(asis.fecha_registro).toLocaleString()}</td>
@@ -212,3 +222,13 @@ export async function populateAsistenciaSelects() {
         selectClase.appendChild(option);
     });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+    cargarDatosGlobales().then(() => {
+        // Cargar las tablas si corresponde
+        const asistenciaSection = document.getElementById('section-asistencia');
+        if (asistenciaSection && asistenciaSection.classList.contains('active')) {
+            renderAsistencia();
+        }
+    });
+});
