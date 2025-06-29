@@ -5,7 +5,8 @@ import {
   obtenerUsuarios,
   obtenerUsuarioPorId,
   actualizarUsuario,
-  eliminarUsuario
+  eliminarUsuario,
+  loginUsuario
 } from '../controllers/usuario.controller.js';
 
 
@@ -19,4 +20,5 @@ router.route('/usuario/:id')
   .put(actualizarUsuario)
   .delete(eliminarUsuario);
 
+router.post('/usuario/login', loginUsuario);
 export default router;

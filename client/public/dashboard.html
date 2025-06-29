@@ -13,11 +13,14 @@
 
 <body class="bg-gray-100 font-inter">
     <div class="dashboard-container">
-        <!-- Navigation Tabs -->
-        <div class="flex border-b border-gray-200 bg-gray-50 rounded-t-xl">
-            <div id="tab-alumnos" class="nav-tab active">Alumnos</div>
-            <div id="tab-clases" class="nav-tab">Clases</div>
-            <div id="tab-asistencia" class="nav-tab">Asistencia</div>
+        <!-- Header with Navigation Tabs and Logout Button -->
+        <div class="flex justify-between items-center border-b border-gray-200 bg-gray-50 rounded-t-xl p-4">
+            <div class="flex">
+                <div id="tab-alumnos" class="nav-tab active">Alumnos</div>
+                <div id="tab-clases" class="nav-tab">Clases</div>
+                <div id="tab-asistencia" class="nav-tab">Asistencia</div>
+            </div>
+            <button id="logout-button" class="btn-primary bg-red-500 hover:bg-red-600 px-4 py-2 text-sm hola">Cerrar Sesión</button>
         </div>
 
         <!-- Alumnos Section -->

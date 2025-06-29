@@ -18,3 +18,13 @@ document.querySelectorAll('.nav-tab').forEach(tab => {
         populateAsistenciaSelects();
     });
 });
+
+document.getElementById('logout-button').addEventListener('click', function () {
+    // Limpiar todo el localStorage
+    localStorage.clear();
+
+    // Opcional: mostrar mensaje de confirmación o usar un modal
+
+    // Redirigir al login o index
+    window.location.href = 'login.html'; // Cambia por 'login.html' si es necesario
+});

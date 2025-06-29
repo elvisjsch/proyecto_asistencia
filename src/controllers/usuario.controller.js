@@ -117,3 +117,46 @@ export const eliminarUsuario = async (req, res) => {
     res.status(500).json({ msg: 'Error al eliminar el usuario' });
   }
 };
+
+// 6. Iniciar sesión (Login)
+export const loginUsuario = async (req, res) => {
+    const { nombre_user, contra_user } = req.body;
+
+    try {
+        // Buscar usuario por nombre de usuario
+        const usuario = await Usuario.findOne({
+            where: { nombre_user }
+        });
+
+        if (!usuario) {
+            return res.status(400).json({ msg: 'Usuario o contraseña incorrectos' });
+        }
+
+        // Verificar estado del usuario
+        if (usuario.estado_user !== 'activo') {
+            return res.status(403).json({ msg: 'El usuario no está activo' });
+        }
+
+        // Comparar contraseña ingresada con la almacenada
+        const validPassword = await bcrypt.compare(contra_user, usuario.contra_user);
+
+        if (!validPassword) {
+            return res.status(400).json({ msg: 'Contraseña incorrecta' });
+        }
+
+        // Si todo es correcto, responder con datos del usuario
+        res.json({
+            success: true,
+            message: 'Inicio de sesión exitoso',
+            usuario: {
+                id_usurios: usuario.id_usurios,
+                nombre_user: usuario.nombre_user,
+                nivel_user: usuario.nivel_user
+            }
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ msg: 'Error al iniciar sesión' });
+    }
+};
