@@ -76,7 +76,7 @@ async function deleteAlumno(id) {
 }
 
 // --- Render Functions ---
-async function renderAlumnos() {
+export async function renderAlumnos() {
     const alumnos = await fetchAlumnos();
     const tbody = document.getElementById('alumnos-table-body');
     tbody.innerHTML = '';

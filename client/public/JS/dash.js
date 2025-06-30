@@ -1,5 +1,6 @@
 import {renderClases} from './clase.js';
 import {populateAsistenciaSelects, renderAsistencia} from './asistencia.js';
+import {renderAlumnos} from './alumno.js';
 document.querySelectorAll('.nav-tab').forEach(tab => {
     tab.addEventListener('click', () => {
         // Remove active class from all tabs and sections
@@ -12,7 +13,7 @@ document.querySelectorAll('.nav-tab').forEach(tab => {
         document.getElementById(sectionId).classList.add('active');
 
         // Refresh tables and selects when switching tabs
-        // renderAlumnos();
+        renderAlumnos();
         renderClases();
         renderAsistencia();
         populateAsistenciaSelects();
